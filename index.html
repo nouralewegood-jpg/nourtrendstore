@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nourtrend AI | المنصة الذكية للتجارة الإلكترونية</title>
+    <meta name="description" content="أول منصة إماراتية متكاملة للتجارة الإلكترونية بالذكاء الاصطناعي">
+    <meta name="keywords" content="دروبشيبينغ, الإمارات, ذكاء اصطناعي, تسويق, ترند">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        * { font-family: 'Tajawal', sans-serif; }
+        body { background: #0f172a; color: #e2e8f0; }
+        .glass-panel { 
+            background: rgba(30, 41, 59, 0.8); 
+            backdrop-filter: blur(12px); 
+            border: 1px solid rgba(255,255,255,0.1); 
+        }
+        .gradient-text { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+        }
+        .ai-glow { box-shadow: 0 0 20px rgba(102, 126, 234, 0.5); }
+        .tool-card { transition: all 0.3s ease; }
+        .tool-card:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 0 10px 40px rgba(102, 126, 234, 0.3); 
+        }
+        .pulse-dot { animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        .metric-card { 
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%); 
+        }
+        .scroll-hide::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <!-- Sidebar -->
+    <aside class="fixed right-0 top-0 h-full w-64 glass-panel z-50" id="sidebar">
+        <div class="p-6 border-b border-gray-700">
+            <div class="flex items-center gap-3">
+                <div class="w-12 h-12 bg-gradient-to-br from-purple-600 to-blue-600 rounded-xl flex items-center justify-center text-white font-bold text-2xl ai-glow">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold gradient-text">Nourtrend AI</h1>
+                    <p class="text-xs text-gray-400">v1.0.0</p>
+                </div>
+            </div>
+        </div>
+        
+        <nav class="p-4 space-y-2">
+            <button onclick="showSection('dashboard')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-purple-600/20 text-purple-300 border border-purple-500/30">
+                <i class="fas fa-chart-line"></i>
+                <span>لوحة التحكم</span>
+            </button>
+            <button onclick="showSection('products')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-700/50 text-gray-300 transition">
+                <i class="fas fa-box"></i>
+                <span>المنتجات</span>
+            </button>
+            <button onclick="showSection('ai-content')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-700/50 text-gray-300 transition">
+                <i class="fas fa-magic"></i>
+                <span>منشئ المحتوى</span>
+            </button>
+            <button onclick="showSection('trend-tracker')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-700/50 text-gray-300 transition">
+                <i class="fas fa-fire"></i>
+                <span>متابعة الترندات</span>
+                <span class="mr-auto w-2 h-2 bg-red-500 rounded-full pulse-dot"></span>
+            </button>
+            <button onclick="showSection('customers')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-700/50 text-gray-300 transition">
+                <i class="fas fa-users"></i>
+                <span>العملاء</span>
+            </button>
+            <button onclick="showSection('shipping')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-700/50 text-gray-300 transition">
+                <i class="fas fa-shipping-fast"></i>
+                <span>الشحن</span>
+            </button>
+            <button onclick="showSection('design')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-700/50 text-gray-300 transition">
+                <i class="fas fa-palette"></i>
+                <span>التصميم</span>
+            </button>
+            <button onclick="showSection('analytics')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-700/50 text-gray-300 transition">
+                <i class="fas fa-chart-pie"></i>
+                <span>التحليلات</span>
+            </button>
+        </nav>
+
+        <div class="absolute bottom-0 w-full p-4 border-t border-gray-700">
+            <div class="glass-panel rounded-xl p-4">
+                <div class="flex items-center gap-2 mb-2">
+                    <div class="w-2 h-2 bg-green-500 rounded-full pulse-dot"></div>
+                    <span class="text-xs text-green-400">النظام يعمل</span>
+                </div>
+                <p class="text-xs text-gray-500">آخر تحديث: <span id="lastUpdate">الآن</span></p>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="mr-64 p-8">
+        
+        <!-- Dashboard -->
+        <section id="dashboard" class="section-content space-y-6">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h2 class="text-3xl font-bold mb-2">لوحة التحكم الذكية</h2>
+                    <p class="text-gray-400">نظرة شاملة على أداء متجرك</p>
+                </div>
+                <button onclick="refreshData()" class="px-4 py-2 bg-purple-600 rounded-lg hover:bg-purple-700 transition flex items-center gap-2">
+                    <i class="fas fa-sync-alt"></i>
+                    تحديث
+                </button>
+            </div>
+
+            <!-- Metrics -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div class="metric-card p-6 rounded-2xl border border-purple-500/20">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center text-purple-400">
+                            <i class="fas fa-eye text-xl"></i>
+                        </div>
+                        <span class="text-green-400 text-sm">+24%</span>
+                    </div>
+                    <div class="text-3xl font-bold mb-1">1,247</div>
+                    <div class="text-gray-400 text-sm">زيارة اليوم</div>
+                </div>
+                <div class="metric-card p-6 rounded-2xl border border-blue-500/20">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center text-blue-400">
+                            <i class="fas fa-shopping-cart text-xl"></i>
+                        </div>
+                        <span class="text-green-400 text-sm">+12%</span>
+                    </div>
+                    <div class="text-3xl font-bold mb-1">38</div>
+                    <div class="text-gray-400 text-sm">طلبات جديدة</div>
+                </div>
+                <div class="metric-card p-6 rounded-2xl border border-pink-500/20">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="w-12 h-12 bg-pink-500/20 rounded-xl flex items-center justify-center text-pink-400">
+                            <i class="fas fa-fire text-xl"></i>
+                        </div>
+                        <span class="text-red-400 text-sm">HOT</span>
+                    </div>
+                    <div class="text-xl font-bold mb-1">شوكولاتة دبي</div>
+                    <div class="text-gray-400 text-sm">الأكثر رواجاً</div>
+                </div>
+                <div class="metric-card p-6 rounded-2xl border border-green-500/20">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center text-green-400">
+                            <i class="fas fa-robot text-xl"></i>
+                        </div>
+                        <span class="text-green-400 text-sm">نشط</span>
+                    </div>
+                    <div class="text-3xl font-bold mb-1">156</div>
+                    <div class="text-gray-400 text-sm">رد آلي</div>
+                </div>
+            </div>
+
+            <!-- AI Insights -->
+            <div class="glass-panel rounded-2xl p-6">
+                <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+                    <i class="fas fa-lightbulb text-yellow-400"></i>
+                    توصيات الذكاء الاصطناعي
+                </h3>
+                <div class="space-y-3" id="aiInsights">
+                    <div class="flex items-center gap-3 p-3 bg-purple-500/10 rounded-lg border border-purple-500/20">
+                        <i class="fas fa-arrow-trend-up text-purple-400"></i>
+                        <span>الذكاء الاصطناعي يرصد ارتفاعاً في البحث عن "شوكولاتة دبي" بنسبة 340%</span>
+                    </div>
+                    <div class="flex items-center gap-3 p-3 bg-blue-500/10 rounded-lg border border-blue-500/20">
+                        <i class="fas fa-clock text-blue-400"></i>
+                        <span>أفضل وقت للنشر على TikTok: 8:00 - 10:00 مساءً</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="glass-panel rounded-2xl p-6">
+                    <h3 class="font-bold mb-4">تحليل الزوار</h3>
+                    <canvas id="visitorsChart" height="200"></canvas>
+                </div>
+                <div class="glass-panel rounded-2xl p-6">
+                    <h3 class="font-bold mb-4">المنتجات الأكثر مبيعاً</h3>
+                    <canvas id="productsChart" height="200"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Products Section -->
+        <section id="products" class="section-content hidden space-y-6">
+            <h2 class="text-3xl font-bold">إدارة المنتجات</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                <div class="glass-panel p-6 rounded-2xl text-center cursor-pointer hover:border-purple-500 transition" onclick="addNewProduct()">
+                    <i class="fas fa-plus text-4xl text-purple-400 mb-3"></i>
+                    <div class="font-bold">إضافة منتج جديد</div>
+                </div>
+                <div class="glass-panel p-6 rounded-2xl text-center">
+                    <div class="text-3xl font-bold text-blue-400 mb-2">20</div>
+                    <div class="text-gray-400">منتج نشط</div>
+                </div>
+                <div class="glass-panel p-6 rounded-2xl text-center">
+                    <div class="text-3xl font-bold text-green-400 mb-2">85%</div>
+                    <div class="text-gray-400">معدل الربح المتوسط</div>
+                </div>
+            </div>
+
+            <div class="glass-panel rounded-2xl p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="font-bold">قائمة المنتجات</h3>
+                    <input type="text" placeholder="بحث..." class="px-4 py-2 bg-gray-800 rounded-lg border border-gray-700">
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead class="text-gray-400 border-b border-gray-700">
+                            <tr>
+                                <th class="text-right pb-3">المنتج</th>
+                                <th class="text-right pb-3">سعر الجملة</th>
+                                <th class="text-right pb-3">سعر البيع</th>
+                                <th class="text-right pb-3">الربح</th>
+                                <th class="text-right pb-3">المخزون</th>
+                            </tr>
+                        </thead>
+                        <tbody id="productsTable">
+                            <!-- Products injected by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI Content Section -->
+        <section id="ai-content" class="section-content hidden space-y-6">
+            <h2 class="text-3xl font-bold">منشئ المحتوى الذكي</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="glass-panel rounded-2xl p-6">
+                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+                        <i class="fas fa-pen-fancy text-purple-400"></i>
+                        مولد أوصاف المنتجات
+                    </h3>
+                    <div class="space-y-4">
+                        <input type="text" id="productNameInput" placeholder="اسم المنتج" class="w-full px-4 py-3 bg-gray-800 rounded-lg border border-gray-700">
+                        <textarea id="productFeatures" rows="3" placeholder="المميزات..." class="w-full px-4 py-3 bg-gray-800 rounded-lg border border-gray-700"></textarea>
+                        <button onclick="generateDescription()" class="w-full py-3 bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg font-bold">
+                            <i class="fas fa-magic ml-2"></i>إنشاء وصف
+                        </button>
+                        <div id="generatedDescription" class="hidden p-4 bg-gray-800 rounded-lg">
+                            <p id="descriptionText" class="text-gray-300"></p>
+                            <button onclick="copyText('descriptionText')" class="mt-2 text-sm text-purple-400">نسخ</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-panel rounded-2xl p-6">
+                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+                        <i class="fas fa-bullhorn text-pink-400"></i>
+                        مولد إعلانات
+                    </h3>
+                    <div class="space-y-4">
+                        <select id="adPlatform" class="w-full px-4 py-3 bg-gray-800 rounded-lg border border-gray-700">
+                            <option value="instagram">Instagram</option>
+                            <option value="tiktok">TikTok</option>
+                            <option value="whatsapp">WhatsApp</option>
+                        </select>
+                        <input type="text" id="adProduct" placeholder="اسم المنتج" class="w-full px-4 py-3 bg-gray-800 rounded-lg border border-gray-700">
+                        <button onclick="generateAd()" class="w-full py-3 bg-gradient-to-r from-pink-600 to-purple-600 rounded-lg font-bold">
+                            <i class="fas fa-wand-magic-sparkles ml-2"></i>إنشاء إعلان
+                        </button>
+                        <div id="generatedAd" class="hidden p-4 bg-gray-800 rounded-lg">
+                            <p id="adText" class="text-gray-300"></p>
+                            <button onclick="copyText('adText')" class="mt-2 text-sm text-purple-400">نسخ</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Other sections... -->
+        <section id="trend-tracker" class="section-content hidden">
+            <h2 class="text-3xl font-bold mb-6">متابعة الترندات</h2>
+            <div class="glass-panel rounded-2xl p-6">
+                <p>قسم متابعة الترندات من TikTok وGoogle Trends</p>
+            </div>
+        </section>
+
+        <section id="customers" class="section-content hidden">
+            <h2 class="text-3xl font-bold mb-6">إدارة العملاء</h2>
+            <div class="glass-panel rounded-2xl p-6">
+                <p>قسم إدارة المحادثات وManyChat</p>
+            </div>
+        </section>
+
+        <section id="shipping" class="section-content hidden">
+            <h2 class="text-3xl font-bold mb-6">الشحن والتتبع</h2>
+            <div class="glass-panel rounded-2xl p-6">
+                <p>قسم إدارة الطلبات والتتبع</p>
+            </div>
+        </section>
+
+        <section id="design" class="section-content hidden">
+            <h2 class="text-3xl font-bold mb-6">التصميم والتسويق</h2>
+            <div class="glass-panel rounded-2xl p-6">
+                <p>روابط Canva وCapCut</p>
+            </div>
+        </section>
+
+        <section id="analytics" class="section-content hidden">
+            <h2 class="text-3xl font-bold mb-6">التحليلات</h2>
+            <div class="glass-panel rounded-2xl p-6">
+                <p>Google Analytics Dashboard</p>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
